@@ -14,9 +14,10 @@
 class Equipe
 {
 private:
-     QVector<Atleta> equipe;
+     QVector<Atleta>equipe;
 public:
      Equipe();
+     void limparTabela();
      void eraseNome( QString txt);
      void eraseIdade( QString num);
      void Sortear();
@@ -35,7 +36,5 @@ public:
 bool compararPorIdade(Atleta a, Atleta b);
 bool compararPorIdade2(Atleta a, Atleta b);
 bool compararPorNome(Atleta a, Atleta b);
-
-
 
 #endif // EQUIPE_H

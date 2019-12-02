@@ -1,7 +1,5 @@
 ﻿#include "mainwindow.h"
 #include "ui_mainwindow.h"
-
-
 Atleta atleta;
 
 MainWindow::MainWindow(QWidget *parent)
@@ -40,7 +38,7 @@ void MainWindow::on_actionSalvar_triggered()
 void MainWindow::on_btnCadastrar_clicked()
 {    
     QString temp = ui->inputNome->text();
-    if(ui->inputNome->text() !="" and ui->inputIdade->text() != ""){
+    if(ui->inputNome->text() != " " and ui->inputIdade->text() != ""){
         atleta.setnome(temp);
         atleta.setidade(ui->inputIdade->text().toDouble());
         int quantidade_linhas = ui->tabela->rowCount();
@@ -93,53 +91,53 @@ void MainWindow::on_Sortear_clicked()
         inserirNaTabela(equipe[i],i);
     }
 }
-
 void MainWindow::on_actionLimpar_Tabela_triggered()
 {
     int qtdeLinhas = ui->tabela->rowCount();
     for(int i = 0; i < qtdeLinhas ; i++)
         ui->tabela->removeRow(0);
+    equipe.limparTabela();
 }
 
 void MainWindow::on_tabela_cellDoubleClicked(int row, int column)
 {
     if(column == 0){
-           QMessageBox::StandardButton resp = QMessageBox::question(this, "Editar Item", "Você deseja editar este item?");
-           if(resp == QMessageBox::Yes){
-               bool ok;
-               QString txt = QInputDialog::getText(this, "Alterar Objeto", "Digite o novo objeto", QLineEdit::Normal,"",&ok);
-               if(ok and !txt.isEmpty()){
-                   atleta.setnome(txt);
-                   atleta.setidade(equipe[row].getidade());
-                   equipe.eraseNome(txt);
-                   equipe.inserirAluno(atleta);
-                   ui->tabela->clearContents();
-                   for(int i = 0; i < equipe.size(); i++){
-                       inserirNaTabela(equipe[i],i);
-                   }
-               }else{
-                   QMessageBox::critical(this, "Erro", "A edição está vazia.");
-               }
-           }
+        QMessageBox::StandardButton resp = QMessageBox::question(this, "Editar Item", "Você deseja editar este item?");
+        if(resp == QMessageBox::Yes){
+            bool ok;
+            QString txt = QInputDialog::getText(this, "Alterar Objeto", "Digite o novo objeto", QLineEdit::Normal,"",&ok);
+            if(ok and !txt.isEmpty()){
+                atleta.setnome(txt);
+                atleta.setidade(equipe[row].getidade());
+                equipe.eraseNome(txt);
+                equipe.inserirAluno(atleta);
+                ui->tabela->clearContents();
+                for(int i = 0; i < equipe.size(); i++){
+                    inserirNaTabela(equipe[i],i);
+                }
+            }else{
+                QMessageBox::critical(this, "Erro", "A edição está vazia.");
+            }
         }
-       if(column == 1){
-           QMessageBox::StandardButton resp = QMessageBox::question(this, "Editar Itens", "Você deseja editar este item?");
-           if(resp == QMessageBox::Yes){
-               bool ok;
-               QString txt = QInputDialog::getText(this, "Alterar Idade", "Digite a nova Idade", QLineEdit::Normal,"",&ok);
-               if(ok and !txt.isEmpty()){
-                   atleta.setidade(txt.toDouble());
-                   QString tmp = equipe[row].getnome();
-                   atleta.setnome(tmp);
-                   equipe.eraseIdade(txt);
-                   equipe.inserirAluno(atleta);
-                   ui->tabela->clearContents();
-                   for(int i = 0; i < equipe.size(); i++){
-                       inserirNaTabela(equipe[i],i);
-                   }
-               }else{
-                   QMessageBox::critical(this, "Erro", "O objeto a ser editado está vazio.");
-               }
-           }
-       }
+    }
+    if(column == 1){
+        QMessageBox::StandardButton resp = QMessageBox::question(this, "Editar Itens", "Você deseja editar este item?");
+        if(resp == QMessageBox::Yes){
+            bool ok;
+            QString txt = QInputDialog::getText(this, "Alterar Idade", "Digite a nova Idade", QLineEdit::Normal,"",&ok);
+            if(ok and !txt.isEmpty()){
+                atleta.setidade(txt.toDouble());
+                QString tmp = equipe[row].getnome();
+                atleta.setnome(tmp);
+                equipe.eraseIdade(txt);
+                equipe.inserirAluno(atleta);
+                ui->tabela->clearContents();
+                for(int i = 0; i < equipe.size(); i++){
+                    inserirNaTabela(equipe[i],i);
+                }
+            }else{
+                QMessageBox::critical(this, "Erro", "O objeto a ser editado está vazio.");
+            }
+        }
+    }
 }

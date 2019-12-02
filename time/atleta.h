@@ -13,7 +13,6 @@ private:
 
 public:
     Atleta();
-
     QString getnome();
     void setnome(QString &value);
     double getidade();
